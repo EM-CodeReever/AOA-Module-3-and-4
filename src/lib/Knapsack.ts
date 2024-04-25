@@ -1,5 +1,4 @@
 
-
 function knapsack(capacity: number, weights: number[], values: number[]){
 
 
@@ -11,6 +10,7 @@ function knapsack(capacity: number, weights: number[], values: number[]){
     // Initialize a table where individual rows represent items
     // and columns represent the weight of the knapsack
     const DP: number[][] = Array.from({ length: N + 1 }, () => Array(capacity + 1).fill(0));
+    
 
     for (let i = 1; i <= N; i++) {
 
@@ -41,9 +41,13 @@ function knapsack(capacity: number, weights: number[], values: number[]){
             sz -= weights[itemIndex];
         }
     }
+    
 
-    // Return the maximum profit
-    return DP[N][capacity];
+    return {
+        maxValue: DP[N][capacity], //maximum profit - last cell of the table,
+        itemsSelected
+    };
+  
 }
 
 
