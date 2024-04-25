@@ -1,3 +1,4 @@
+import { Vehicle } from "./Vehicle";
 
 function knapsack(capacity: number, weights: number[], values: number[]){
 
@@ -42,6 +43,8 @@ function knapsack(capacity: number, weights: number[], values: number[]){
         }
     }
     
+    console.log(DP);
+    
 
     return {
         maxValue: DP[N][capacity], //maximum profit - last cell of the table,
@@ -52,10 +55,31 @@ function knapsack(capacity: number, weights: number[], values: number[]){
 
 
 
+
+function getBestPriorityVehicles(capacity: number, vehicles: Vehicle[]) {
+    const values = vehicles.map(v => v.priorityValue);
+    const weights = vehicles.map(v => v.congestionImpact);
+    const { maxValue, itemsSelected } = knapsack(capacity, weights, values);
+    console.log(maxValue, itemsSelected);
+    
+    return itemsSelected.map(i => vehicles[i]);
+}
+
+
+
+
+let vehicles = [
+    new Vehicle("Car"),
+    new Vehicle("Emergency"),
+    new Vehicle("Truck"),
+    new Vehicle("Bike"),
+    new Vehicle("Car"),
+    new Vehicle("Bus"),
+    new Vehicle("Bus"),
+    
+];
+
+
 let capacity = 10;
-let V = [1, 4, 8, 5];
-let W = [3, 3, 5, 6];
-
-console.log(knapsack(capacity, W, V)); 
-
+let bestVehicles = getBestPriorityVehicles(capacity, vehicles);
 
