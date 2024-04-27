@@ -1,8 +1,8 @@
 <script lang="ts">
-    import Bike from '../svg/Bike.svelte'
-    import Truck from '../svg/Truck.svelte'
-    import Car from '../svg/Car.svelte'
-  import RoadDivider from '../components/RoadDivider.svelte';
+    import Bike from '$lib/svg/Bike.svelte'
+    import Truck from '$lib/svg/Truck.svelte'
+    import Car from '$lib/svg/Car.svelte'
+  import RoadDivider from '$lib/components/RoadDivider.svelte';
 
 </script>
 
