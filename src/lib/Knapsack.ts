@@ -1,6 +1,6 @@
 import { Vehicle } from "./Vehicle";
 
-function knapsack(capacity: number, weights: number[], values: number[]){
+export function knapsack(capacity: number, weights: number[], values: number[]){
 
 
     if (weights == null || values == null || weights.length != values.length || capacity < 0)
@@ -56,7 +56,7 @@ function knapsack(capacity: number, weights: number[], values: number[]){
 
 
 
-function getBestPriorityVehicles(capacity: number, vehicles: Vehicle[]) {
+export function getBestPriorityVehicles(capacity: number, vehicles: Vehicle[]) {
     const values = vehicles.map(v => v.priorityValue);
     const weights = vehicles.map(v => v.congestionImpact);
     const { maxValue, itemsSelected } = knapsack(capacity, weights, values);
@@ -82,4 +82,5 @@ let vehicles = [
 
 let capacity = 10;
 let bestVehicles = getBestPriorityVehicles(capacity, vehicles);
+
 
