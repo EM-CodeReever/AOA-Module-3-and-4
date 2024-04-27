@@ -16,11 +16,11 @@
 
 
 <section class="flex p-5 space-x-5">
-    <section class="flex space-y-2 w-full flex-col">
+    <section class="flex space-y-2 w-full max-w-4xl flex-col">
         <!-- Road 1 -->
         <p class="bg-indigo-600 rounded-lg p-2 text-white font-bold w-fit">Road One</p>
         <div class="bg-gray-800 h-40 w-full relative rounded">
-            <div id="R1-L1" class="flex space-x-5 items-center px-5 w-full justify-end">
+            <div id="R1-L1" class="flex space-x-5 items-center px-5 w-full justify-end ">
                 <Car/><Bike /><Truck />
             </div>
             <RoadDivider />
@@ -42,8 +42,8 @@
         <!-- Road 3 -->
         <p class="bg-indigo-600 rounded-lg p-2 text-white font-bold w-fit">Road Three</p>
         <div class="bg-gray-800 h-40 w-full relative rounded ">
-            <div id="R3-L1" class="flex space-x-5 items-center px-5 w-full justify-end">
-                <Bike/> <Truck /><Car /> <Car /> <Truck />
+            <div id="R3-L1" class="flex space-x-5 items-center px-5 w-full justify-end ">
+                <Bike/> <Truck /><Car /> <Car /> <Truck /><Bike/> <Truck /><Car /> <Car /> <Truck /><Bike/> <Truck /><Car /> <Car /> <Truck /><Bike/> <Truck /><Car /> <Car /> <Truck />
             </div>
             <RoadDivider />
             <div id="R3-L2" class="flex items-center space-x-5 px-5 w-full justify-end">
