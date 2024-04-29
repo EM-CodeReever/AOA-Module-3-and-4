@@ -37,6 +37,56 @@
     }
     return allVehicles;
   }
+
+  function countVehicleTypes(vehicles: Vehicle[]){
+
+    let carCount = 0;
+    let truckCount = 0;
+    let bikeCount = 0;
+    let emergencyCount = 0;
+    let busCount = 0;
+
+    let countString = "";
+
+    for(let i = 0; i < vehicles.length; i++){
+        let vehicle = vehicles[i];
+        if(vehicle.type === "Car"){
+            carCount++;
+        }
+        if(vehicle.type === "Truck"){
+            truckCount++;
+        }
+        if(vehicle.type === "Bike"){
+            bikeCount++;
+        }
+        if(vehicle.type === "Emergency"){
+            emergencyCount++;
+        }
+        if(vehicle.type === "Bus"){
+            busCount++;
+        }
+    }
+
+    if(carCount > 0){
+        countString += `${carCount} Car(s), `;
+    }
+    if(truckCount > 0){
+        countString += `${truckCount} Truck(s), `;
+    }
+    if(bikeCount > 0){
+        countString += `${bikeCount} Bike(s), `;
+    }
+    if(emergencyCount > 0){
+        countString += `${emergencyCount} Emergency Vehicle(s), `;
+    }
+    if(busCount > 0){
+        countString += `${busCount} Bus(es), `;
+    }
+
+    return countString;
+
+   
+    }
     
 
     function getBestVehicles(capacity: number){
@@ -88,7 +138,7 @@
 <h1 class="text-xl text-center font-bold">Analysis of Algorithms</h1>
 <h2 class="text-lg text-center">Module 3</h2>
 <p class="text-center">Group: <strong>Elliot Morrison, Matthew Cole, Garaine Baker</strong></p>
-<p class="text-center">This program makes use of the knapsack algorithm to find the best route for vehicles travelling to and from kingston; considering their congestion impact, priority and the congestion state of the highways.</p>
+<p class="text-center">This program makes use of the knapsack algorithm to find the best route for vehicles travelling to and from kingston; considering their congestion impact, priority and the congestion limit of the highways.</p>
 
 
 
@@ -196,7 +246,7 @@
     <section>
         <div class="w-full max-w-lg mt-16 h-64 bg-gray-700 rounded p-2 text-gray-300">
             {#if showOutput}
-            <p>{vehicles.length} vehicles were placed on the Mandela Highway, without exceeding its congestion limit of {mandelaCapacity}. <br></p>
+            <p>{countVehicleTypes(vehicles)} were placed on the Mandela Highway, without exceeding its congestion limit of {mandelaCapacity}. <br></p>
             {#if leftOverVehicles.length > 0}
             <p>There were {leftOverVehicles.length} left-over vehicles placed on the Portmore Toll to Kingston, which is more efficient than adding them to the Mandela Hwy; consequently increasing congestion.</p>
             {:else}
