@@ -244,9 +244,9 @@
         
     </section>
     <section>
-        <div class="w-full max-w-lg mt-16 h-64 bg-gray-700 rounded p-2 text-gray-300">
+        <div class="w-full max-w-lg mt-16 min-h-64 bg-gray-700 rounded p-2 text-gray-300">
             {#if showOutput}
-            <p>{countVehicleTypes(vehicles)} were placed on the Mandela Highway, without exceeding its congestion limit of {mandelaCapacity}. <br></p>
+            <p>{countVehicleTypes(vehicles)} were able to placed on the Mandela Highway {leftOverVehicles.length > 0 ? "to maximize value" : ""}  without exceeding its congestion limit of {mandelaCapacity}. <br></p>
             {#if leftOverVehicles.length > 0}
             <p>There were {leftOverVehicles.length} left-over vehicles placed on the Portmore Toll to Kingston, which is more efficient than adding them to the Mandela Hwy; consequently increasing congestion.</p>
             {:else}
