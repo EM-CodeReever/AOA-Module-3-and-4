@@ -192,7 +192,7 @@
         
     </section>
     <section>
-        <div class="w-full max-w-lg mt-12 h-64 bg-gray-700 rounded p-2 text-gray-300">
+        <div class="w-full max-w-lg mt-12 min-h-64 bg-gray-700 rounded p-2 text-gray-300">
             {#if showOutput}
             <p>{vehicles.length} vehicles were placed on the Mandela Highway, with out exceeding its congestion limit.</p>
             <p>There were {leftOverVehicles.length} left-over vehicles placed on the Portmore Toll to Kingston which is more efficient than adding them to the Mandela Hwy; consequently increasing congestion.</p>
