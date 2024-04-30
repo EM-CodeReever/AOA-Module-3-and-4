@@ -1,87 +1,138 @@
 <script lang="ts">
+import {AL_ESCARGOT,MONSTER,MEDIUM2,MEDIUM,EASY,EASY2} from '$lib/SodukuBoards'
+// N is the size of the 2D matrix N*N
+const N = 9;
+let choice = 0;
 
-  let board: number[][] = [
-    [5, 3, 0, 0, 7, 0, 0, 0, 0],
-    [6, 0, 0, 1, 9, 5, 0, 0, 0],
-    [0, 9, 8, 0, 0, 0, 0, 6, 0],
-    [8, 0, 0, 0, 6, 0, 0, 0, 3],
-    [4, 0, 0, 8, 0, 3, 0, 0, 1],
-    [7, 0, 0, 0, 2, 0, 0, 0, 6],
-    [0, 6, 0, 0, 0, 0, 2, 8, 0],
-    [0, 0, 0, 4, 1, 9, 0, 0, 5],
-    [0, 0, 0, 0, 8, 0, 0, 7, 9]
+let grid: number[][] = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
-function isValid(board: number[][], row: number, col: number, num: number): boolean {
-    // Check if num is not already present in the current row, column, and 3x3 subgrid
-    for (let i = 0; i < 9; i++) {
-        if (
-            board[row][i] === num ||
-            board[i][col] === num ||
-            board[Math.floor(row - row % 3 + i / 3)][Math.floor(col - col % 3 + i % 3)] === num
-        ) {
-            return false;
-        }
-    }
-    return true;
-}
-
-function solveSudoku(board: number[][]): boolean {
-
-    let boardToSolve = board;
-    // Find the first empty cell
-    for (let i = 0; i < 9; i++) {
-        for (let j = 0; j < 9; j++) {
-            if (boardToSolve[i][j] === 0) {
-                // Try filling the cell with numbers from 1 to 9
-                for (let num = 1; num <= 9; num++) {
-                    if (isValid(boardToSolve, i, j, num)) {
-                        boardToSolve[i][j] = num;
-                        // Recursively solve the rest of the puzzle
-                        if (solveSudoku(boardToSolve)) {
-                            return true;
-                        }
-                        // If the solution is not possible, backtrack
-                        boardToSolve[i][j] = 0;
-                    }
-                }
-                return false;
-            }
-        }
-    }
-
-    console.log("Solved");
-    console.log(boardToSolve);
-    console.log("should not be solved");
-    console.log(board);
-    
-    
-    
-    
-    // board = boardToSolve;
-    
-    return true;
+function chooseBoard(num: number){
+    if(num == 0) return AL_ESCARGOT;
+    if(num == 1) return MONSTER;
+    if(num == 2) return MEDIUM2;
+    if(num == 3) return MEDIUM;
+    if(num == 4) return EASY;
+    if(num == 5) return EASY2;
 }
 
 
 
+// Checks whether it will be 
+// legal to assign num to the
+// given row, col
+function isSafe(grid: number[][], row: number, col: number, num: number): boolean {
+	// Check if we find the same num 
+	// in the similar row, we
+	// return false
+	for (let x = 0; x < N; x++)
+		if (grid[row][x] === num)
+			return false;
+
+	// Check if we find the same num in 
+	// the similar column, we
+	// return false
+	for (let x = 0; x < N; x++)
+		if (grid[x][col] === num)
+			return false;
+
+	// Check if we find the same num in 
+	// the particular 3*3 matrix,
+	// we return false
+	const startRow = row - (row % 3);
+	const startCol = col - (col % 3);
+
+	for (let i = 0; i < 3; i++)
+		for (let j = 0; j < 3; j++)
+			if (grid[i + startRow][j + startCol] === num)
+				return false;
+
+	return true;
+}
+
+/* Takes a partially filled-in grid and attempts
+to assign values to all unassigned locations in
+such a way to meet the requirements for
+Sudoku solution (non-duplication across rows,
+columns, and boxes) */
+function solveSudoku(grid: number[][], row: number, col: number): boolean {
+	// Check if we have reached the 8th 
+	// row and 9th column (0
+	// indexed matrix), we are 
+	// returning true to avoid
+	// further backtracking
+	if (row === N - 1 && col === N)
+		return true;
+
+	// Check if column value becomes 9, 
+	// we move to next row and
+	// column start from 0
+	if (col === N) {
+		row++;
+		col = 0;
+	}
+
+	// Check if the current position of 
+	// the grid already contains
+	// value >0, we iterate for next column
+	if (grid[row][col] > 0)
+		return solveSudoku(grid, row, col + 1);
+
+	for (let num = 1; num <= N; num++) {
+		// Check if it is safe to place 
+		// the num (1-9) in the
+		// given row, col -> we 
+		// move to next column
+		if (isSafe(grid, row, col, num)) {
+			/* Assigning the num in 
+			the current (row, col)
+			position of the grid
+			and assuming our assigned 
+			num in the position
+			is correct */
+			grid[row][col] = num;
+
+			// Checking for next possibility with next
+			// column
+			if (solveSudoku(grid, row, col + 1))
+				return true;
+		}
+
+		// Removing the assigned num, 
+		// since our assumption
+		// was wrong, and we go for 
+		// next assumption with
+		// diff num value
+		grid[row][col] = 0;
+	}
+	return false;
+}
+
+function setGrid(num: number){
+    grid = chooseBoard(num) as number[][];
+}
+// Driver Code
+function main() {
+	// 0 means unassigned cells
+	if (solveSudoku(grid, 0, 0)){
+        console.log("Solution");
+		console.log(grid);
+        grid = grid;
+    }else{
+        console.log("no solution exists");
+    }
+}
 
 
-
-
-
-
-
-//     if (solveSudoku(board)) {
-//     for (const row of board) {
-//         console.log(row.join(" "));
-//     }
-// } else {
-//     console.log("No solution exists.");
-// }
-console.log("board before solving");
-
-console.log(board);
 
 
 </script>
@@ -92,10 +143,10 @@ console.log(board);
         <p>Done by: <strong class="pl-1">Elliot Morrison</strong></p>
     </div>
     <section class="w-full p-3 flex"> 
-        <div class="grid grid-cols-9 gap-2 w-fit relative">
-            {#each board as row, i}
+        <div class="grid grid-cols-9 gap-1 w-fit relative">
+            {#each grid as row, i}
                 {#each row as cell, j}
-                    <div class="w-16 h-16 bg-indigo-400 rounded-lg flex justify-center items-center font-bold text-2xl">
+                    <div class="w-10 h-10 bg-indigo-400 rounded-lg flex justify-center items-center font-bold text-2xl">
                         {cell === 0 ? "" : cell}
                     </div>
                 {/each}
@@ -107,7 +158,17 @@ console.log(board);
             <div class="rounded w-0.5 bg-gray-800 h-full absolute left-2/3 "></div>
         </div>
         <div>
-            <button class="bg-green-700 hover:bg-green-500 text-white p-2 rounded-lg" on:click={() => solveSudoku(board)}>Solve Board</button>
+            <select bind:value={choice} class="bg-gray-800 text-white p-2 rounded-lg" on:change={()=>{setGrid(choice)}}>
+                <option selected disabled>Choose difficulty</option>
+                <option value="0">AL_ESCARGOT</option>
+                <option value="1">MONSTER</option>
+                <option value="2">MEDIUM2</option>
+                <option value="3">MEDIUM</option>
+                <option value="4">EASY</option>
+                <option value="5">EASY2</option>
+            </select>
+
+            <button class="bg-green-700 hover:bg-green-500 text-white p-2 rounded-lg" on:click={() => main()}>Solve Board</button>
         </div>
     </section>
 </section>
