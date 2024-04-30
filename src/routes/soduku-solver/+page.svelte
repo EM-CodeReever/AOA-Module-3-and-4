@@ -123,13 +123,17 @@ function setGrid(num: number){
 // Driver Code
 function main() {
 	// 0 means unassigned cells
+    const startTime = performance.now();
 	if (solveSudoku(grid, 0, 0)){
-        console.log("Solution");
-		console.log(grid);
         grid = grid;
+        
     }else{
         console.log("no solution exists");
     }
+    const endTime = performance.now();
+    const elapsedTime = endTime - startTime;
+
+    console.log(`Execution time: ${elapsedTime} milliseconds`);
 }
 
 
@@ -142,7 +146,7 @@ function main() {
         <h1 class="text-3xl font-semibold">Analysis of Algorithms - Soduku Solver</h1>
         <p>Done by: <strong class="pl-1">Elliot Morrison</strong></p>
     </div>
-    <section class="w-full p-3 flex"> 
+    <section class="w-full p-3 flex justify-center items-center flex-col"> 
         <div class="grid grid-cols-9 gap-1 w-fit relative">
             {#each grid as row, i}
                 {#each row as cell, j}
@@ -157,18 +161,21 @@ function main() {
             <div class="rounded w-0.5 bg-gray-800 h-full absolute left-1/3 -translate-x-0.5"></div>
             <div class="rounded w-0.5 bg-gray-800 h-full absolute left-2/3 "></div>
         </div>
-        <div>
-            <select bind:value={choice} class="bg-gray-800 text-white p-2 rounded-lg" on:change={()=>{setGrid(choice)}}>
-                <option selected disabled>Choose difficulty</option>
-                <option value="0">AL_ESCARGOT</option>
-                <option value="1">MONSTER</option>
-                <option value="2">MEDIUM2</option>
-                <option value="3">MEDIUM</option>
-                <option value="4">EASY</option>
-                <option value="5">EASY2</option>
-            </select>
+        <div class="flex w-full max-w-sm items-end justify-between">
+            <div>
+                <h2 class="text font-semibold">Choose Board</h2>
+                <select bind:value={choice} class="bg-gray-800 text-white p-2 rounded-lg h-fit" on:change={()=>{setGrid(choice)}}>
+                    <option value="0">AL_ESCARGOT</option>
+                    <option value="1">MONSTER</option>
+                    <option value="2">MEDIUM2</option>
+                    <option value="3">MEDIUM</option>
+                    <option value="4">EASY</option>
+                    <option value="5">EASY2</option>
+                </select>
+            </div>
+            
 
-            <button class="bg-green-700 hover:bg-green-500 text-white p-2 rounded-lg" on:click={() => main()}>Solve Board</button>
+            <button class="bg-green-700 hover:bg-green-500 text-white h-fit p-2 rounded-lg" on:click={() => main()}>Solve Board</button>
         </div>
     </section>
 </section>

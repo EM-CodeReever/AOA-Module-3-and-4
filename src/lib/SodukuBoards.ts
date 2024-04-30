@@ -38,7 +38,7 @@ export let MEDIUM: number[][] = [
 ];
 
 //Another medium board
-export let MEDIUM2: number[][] = [
+export let EASY2: number[][] = [
     [0, 9, 4, 7, 0, 2, 0, 0, 0],
     [0, 0, 0, 0, 0, 9, 5, 0, 0],
     [3, 0, 8, 6, 0, 0, 0, 7, 0],
@@ -64,7 +64,7 @@ export let EASY: number[][] = [
 ];
 
 //Another easy board
-export let EASY2: number[][] = [
+export let MEDIUM2: number[][] = [
     [3, 0, 6, 5, 0, 8, 4, 0, 0],
 	[5, 2, 0, 0, 0, 0, 0, 0, 0],
 	[0, 8, 7, 0, 0, 0, 0, 3, 1],
