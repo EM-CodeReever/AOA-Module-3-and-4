@@ -15,6 +15,8 @@
   let numberOfEmergency = 0;
   let numberOfBuses = 0;
   let showOutput = false;
+  let portmoreCapacity = 48;
+  let mandelaCapacity = 48;
 
   function SetupVehicles(){
     let allVehicles = []
@@ -35,6 +37,56 @@
     }
     return allVehicles;
   }
+
+  function countVehicleTypes(vehicles: Vehicle[]){
+
+    let carCount = 0;
+    let truckCount = 0;
+    let bikeCount = 0;
+    let emergencyCount = 0;
+    let busCount = 0;
+
+    let countString = "";
+
+    for(let i = 0; i < vehicles.length; i++){
+        let vehicle = vehicles[i];
+        if(vehicle.type === "Car"){
+            carCount++;
+        }
+        if(vehicle.type === "Truck"){
+            truckCount++;
+        }
+        if(vehicle.type === "Bike"){
+            bikeCount++;
+        }
+        if(vehicle.type === "Emergency"){
+            emergencyCount++;
+        }
+        if(vehicle.type === "Bus"){
+            busCount++;
+        }
+    }
+
+    if(carCount > 0){
+        countString += `${carCount} Car(s), `;
+    }
+    if(truckCount > 0){
+        countString += `${truckCount} Truck(s), `;
+    }
+    if(bikeCount > 0){
+        countString += `${bikeCount} Bike(s), `;
+    }
+    if(emergencyCount > 0){
+        countString += `${emergencyCount} Emergency Vehicle(s), `;
+    }
+    if(busCount > 0){
+        countString += `${busCount} Bus(es), `;
+    }
+
+    return countString;
+
+   
+    }
     
 
     function getBestVehicles(capacity: number){
@@ -86,14 +138,14 @@
 <h1 class="text-xl text-center font-bold">Analysis of Algorithms</h1>
 <h2 class="text-lg text-center">Module 3</h2>
 <p class="text-center">Group: <strong>Elliot Morrison, Matthew Cole, Garaine Baker</strong></p>
-<p class="text-center">This program fins the best route for vehicles considering their congestion impact, priority and the congestion state of either the Mandela Highway or Portmore Toll.</p>
+<p class="text-center">This program makes use of the knapsack algorithm to find the best route for vehicles travelling to and from kingston; considering their congestion impact, priority and the congestion limit of the highways.</p>
 
 
 
 <section class="flex p-5 space-x-5">
     <section class="flex space-y-2 w-full max-w-3xl flex-col">
         <!-- Mandela HighWay -->
-        <p class="bg-indigo-600 rounded-lg p-2 text-white font-bold w-fit">Mandela Highway - Congestion limit: 48</p>
+        <p class="bg-indigo-600 rounded-lg p-2 text-white font-bold w-fit">Mandela Highway - Congestion limit: <input class="bg-gray-700 w-16 text-white p-2 rounded" bind:value={mandelaCapacity} type="number"/></p>
         <div class="bg-gray-800 h-80 max-h-fit w-full relative rounded">
             
             {#each splitVehiclesEvenly(vehicles,4) as laneVehicles,i}
@@ -126,7 +178,7 @@
         </div>
 
         <!-- Portmore Toll -->
-        <p class="bg-indigo-600 rounded-lg p-2 text-white font-bold w-fit">Portmore Toll - Congestion limit: 48</p>
+        <p class="bg-indigo-600 rounded-lg p-2 text-white font-bold w-fit">Portmore Toll - Congestion limit: <input class="bg-gray-700 w-16 text-white p-2 rounded" bind:value={portmoreCapacity} type="number"/></p>
         <div class="bg-gray-800 h-80 w-full relative rounded ">
              
             {#each splitVehiclesEvenly(leftOverVehicles,4) as laneVehicles,i}
@@ -157,7 +209,7 @@
             {/each}
         </div>
     </section>
-    <section class="rounded mt-12 w-full space-y-3 w-full max-w-md bg-gray-800 p-3 h-fit flex flex-col">
+    <section class="rounded mt-16 w-full space-y-3 w-full max-w-md bg-gray-800 p-3 h-fit flex flex-col">
         <span class="flex space-y-3 h-fit flex-col">
             
                 
@@ -186,16 +238,20 @@
 
             </div>
         </span>
-        <button on:click={()=>{getBestVehicles(48)}} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
+        <button on:click={()=>{getBestVehicles(mandelaCapacity)}} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
             Add Vehicles
         </button>
         
     </section>
     <section>
-        <div class="w-full max-w-lg mt-12 min-h-64 bg-gray-700 rounded p-2 text-gray-300">
+        <div class="w-full max-w-lg mt-16 min-h-64 bg-gray-700 rounded p-2 text-gray-300">
             {#if showOutput}
-            <p>{vehicles.length} vehicles were placed on the Mandela Highway, with out exceeding its congestion limit.</p>
-            <p>There were {leftOverVehicles.length} left-over vehicles placed on the Portmore Toll to Kingston which is more efficient than adding them to the Mandela Hwy; consequently increasing congestion.</p>
+            <p>{countVehicleTypes(vehicles)} were able to be placed on the Mandela Highway {leftOverVehicles.length > 0 ? "to maximize value" : ""}  without exceeding its congestion limit of {mandelaCapacity}. <br></p>
+            {#if leftOverVehicles.length > 0}
+            <p>There were {leftOverVehicles.length} left-over vehicles placed on the Portmore Toll to Kingston, which is more efficient than adding them to the Mandela Hwy; consequently increasing congestion.</p>
+            {:else}
+            <p>All vehicles were placed on the Mandela Highway, without exceeding its congestion limit 😁👌</p>
+            {/if}
             {:else}
             <p>Click the button to add vehicles to the routes.</p>
             {/if}
