@@ -9,7 +9,7 @@
     <div>
         <a class="underline" href="/soduku-solver">Soduku Solver</a>
         <br>
-        <a href="/subset" class="underline">SubSet</a>
+        <a href="/subset-sum" class="underline">SubSet</a>
         <br>
         <a href="/n-queen" class="underline">N Queen</a>
     </div>
