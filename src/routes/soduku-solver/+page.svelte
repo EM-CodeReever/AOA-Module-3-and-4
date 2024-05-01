@@ -1,5 +1,5 @@
 <script lang="ts">
-import {AL_ESCARGOT,MONSTER,MEDIUM2,MEDIUM,EASY,EASY2} from '$lib/SodukuBoards'
+import {AL_ESCARGOT,MONSTER,MEDIUM2,MEDIUM,EASY,EASY2} from './SodukuBoards'
 // N is the size of the 2D matrix N*N
 const N = 9;
 let choice = 0;

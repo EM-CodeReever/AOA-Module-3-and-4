@@ -5,7 +5,7 @@
     import Truck from '$lib/svg/Truck.svelte';
     import Bike from '$lib/svg/Bike.svelte';
     import Bus from '$lib/svg/Bus.svelte';
-    import type { VehicleType } from '$lib/Vehicle';
+    import type { VehicleType } from '../../routes/knapsack/Vehicle';
 
     export let VehicleType: VehicleType = "Car"; 
 
