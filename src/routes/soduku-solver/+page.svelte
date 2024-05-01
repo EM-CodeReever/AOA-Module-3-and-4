@@ -30,7 +30,7 @@ function chooseBoard(num: number){
 // Checks whether it will be 
 // legal to assign num to the
 // given row, col
-function isSafe(grid: number[][], row: number, col: number, num: number): boolean {
+function isLegal(grid: number[][], row: number, col: number, num: number): boolean {
 	// Check if we find the same num 
 	// in the similar row, we
 	// return false
@@ -92,7 +92,7 @@ function solveSudoku(grid: number[][], row: number, col: number): boolean {
 		// the num (1-9) in the
 		// given row, col -> we 
 		// move to next column
-		if (isSafe(grid, row, col, num)) {
+		if (isLegal(grid, row, col, num)) {
 			/* Assigning the num in 
 			the current (row, col)
 			position of the grid
@@ -112,6 +112,7 @@ function solveSudoku(grid: number[][], row: number, col: number): boolean {
 		// was wrong, and we go for 
 		// next assumption with
 		// diff num value
+        //once we have tried all the numbers and none of them work, we backtrack
 		grid[row][col] = 0;
 	}
 	return false;
@@ -120,7 +121,7 @@ function solveSudoku(grid: number[][], row: number, col: number): boolean {
 function setGrid(num: number){
     grid = chooseBoard(num) as number[][];
 }
-// Driver Code
+
 function main() {
 	// 0 means unassigned cells
     const startTime = performance.now();
