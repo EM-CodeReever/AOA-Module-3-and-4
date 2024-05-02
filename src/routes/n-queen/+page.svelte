@@ -15,6 +15,8 @@
 
         if(solutions.length === 0){
             alert("No Solution Found for N = " + n )
+        }else{
+            alert("Found " + solutions.length + " Solutions for N = " + n )
         }
         
         solutions.forEach((solution)=>{
