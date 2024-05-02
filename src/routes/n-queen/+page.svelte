@@ -12,6 +12,10 @@
     function solveNQueensHandler(n: number){
         let solutions = solveNQueens(n);
         // console.log(solutions);
+
+        if(solutions.length === 0){
+            alert("No Solution Found for N = " + n )
+        }
         
         solutions.forEach((solution)=>{
             let board: string[][] = []
