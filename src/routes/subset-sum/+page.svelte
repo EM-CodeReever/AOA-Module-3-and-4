@@ -13,21 +13,21 @@
 
     // Backtracking algorithm to find subsets
     function backtrack(start: number, path: number[], currSum: number) {
-      if (currSum === targetSum) {
+      if (currSum === targetSum) {  //checks if the current sum is equal to the target sum. If they are equal, it means that the current subset sums up to the target sum.
         subsets.push(path.slice());
         return;
       }
-      for (let i = start; i < numbers.length; i++) {
-        if (currSum + numbers[i] <= targetSum) {
+      for (let i = start; i < numbers.length; i++) { //This loop will explore all possible combinations of elements to find subsets.
+        if (currSum + numbers[i] <= targetSum) { //checks if adding the current number  to the current sum  will not exceed the target sum
           path.push(numbers[i]);
-          backtrack(i + 1, path, currSum + numbers[i]);
+          backtrack(i + 1, path, currSum + numbers[i]); //recursively calls the backtrack function 
           path.pop();
         }
       }
     }
 
     // Start backtracking
-    backtrack(0, [], 0);
+    backtrack(0, [], 0); //initiate the backtracking process from the first element of the numbers array (index 0)
 
     // If no subsets found, display message
     if (subsets.length === 0) {
